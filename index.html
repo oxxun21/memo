@@ -8,6 +8,7 @@
   <title>메모장</title>
 
   <!-- CSS -->
+  <link rel="stylesheet" href="./css/reset.css">
   <link rel="stylesheet" href="./css/style.css">
 
   <!-- toastui-editor -->
@@ -17,24 +18,32 @@
 
 <body>
   <main>
-    <section>
-      <time datetime="">
-        <span class="year"></span>
-        <span class="month"></span>
-        <span class="date"></span>
-      </time>
-
-      <div id="weather">
+    <div class="flex">
+      <section id="date">
+        <time datetime="">
+          <span class="year"></span>
+          <span class="month"></span>
+          <span class="date"></span>
+        </time>
+      </section>
+      
+      <section id="weather">
         <span></span>
         <span></span>
-      </div>
-
+      </section>
+    </div>
+    
+    <section id="memo">
       <label for="title">제목</label>
       <input type="text" name="" id="title" />
       <div id="editor"></div>
 
-      <button onclick="saveNote()">메모</button>
+      <div class="right">
+        <button class="btn" onclick="saveNote()">등록</button>
+        <button class="btn">초기화</button>
+      </div>
     </section>
+
     <section id="display"></section>
   </main>
 

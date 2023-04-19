@@ -6,7 +6,7 @@ const Editor = toastui.Editor;
 const editor = new Editor({
   el: document.querySelector("#editor"),
   height: "600px",
-  initialEditType: "markdown",
+  initialEditType: "wysiwyg",
   previewStyle: "vertical",
 });
 
@@ -54,6 +54,8 @@ function remove() {
   localStorage.setItem("allMemo", JSON.stringify(allMemo));
   render();
 }
+
+// 토스트 에디터 초기화 기능
 
 // 날짜
 const $year = document.querySelector('.year');
