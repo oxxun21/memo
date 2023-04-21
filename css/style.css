@@ -12,7 +12,7 @@ body {
 
 main {
   margin: 0 auto;
-  max-width: 80%;
+  max-width: 70%;
 }
 
 .flex {
@@ -34,7 +34,7 @@ main {
 
 }
 
-#memo label {
+#memo .label {
   padding: 10px 0;
   font-size: 25px;
   margin-right: 15px;
@@ -56,20 +56,21 @@ main {
   margin-bottom: 20px;
 }
 
-#memo .btn {
+.btn {
   font-family: 'SpoqaHanSansNeo-Regular';
-  min-width: 100px;
-  padding: 10px;
+  width: 120px;
+  height: 50px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   background: lightcoral;
   font-size: 20px;
   color: #fff;
   cursor: pointer;
 }
 
-#memo .btn:hover {
-  
+.btn:hover {
+  background: rgb(235, 75, 75);
+  transition: all .5s;
 }
 
 #editor {
@@ -77,5 +78,42 @@ main {
 }
 
 #display {
+  margin-bottom: 20px;
+} 
 
+#display > div {
+  width: 100%;
+  border-bottom: 1px solid #bdbdbd;
+  padding: 20px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.contentDiv span {
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.contentDiv h2 {
+  font-size: 22px;
+  display: inline;
+}
+
+#display button {
+  font-size: 18px;
+  width: 100px;
+}
+
+.contentDiv {
+  margin-top: 20px;
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  /* text-overflow: ellipsis; */
+}
+
+.contentDiv > div {
+  margin-top: 20px;
 }
