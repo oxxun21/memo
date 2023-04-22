@@ -5,9 +5,11 @@ const Editor = toastui.Editor;
 
 const editor = new Editor({
   el: document.querySelector("#editor"),
-  height: "600px",
+  height: "450px",
   initialEditType: "markdown",
   previewStyle: "vertical",
+  hideModeSwitch: "true",   // wysiwyg, markdown 변경 버튼 숨김
+  placeholder: "내용을 입력해주세요.",
 });
 
 render(); // render 가 있어야 새로고침 시 저장 내용들이 불러와져있음
@@ -16,18 +18,27 @@ function saveNote() {
   const title = document.getElementById("title").value;
   const content = editor.getHTML();
 
-  if (true) { // 에디터 안에 내용이 비어있으면 등록 X 기능
+  if (title === "" && content === "") { // 에디터 안에 내용이 비어있으면 등록 X 기능 => 왜 안대지?
+    alert('제목과 내용을 입력해주세요');
+  } else {
     allMemo.push({ title, content, len: allMemo.length });
-
     localStorage.setItem("allMemo", JSON.stringify(allMemo));
+    render();
   }
-  render();
+}
+
+function reset(){ // wysiwyg 에서는 왜 안될까
+  const title = document.querySelector('#title');
+  const editor = document.querySelector('.ProseMirror');
+
+  title.value = ""
+  while(editor.hasChildNodes()){
+    editor.removeChild(editor.firstChild);
+  }
 }
 
 function render(){
   const display = document.getElementById("display");
-  const editor = document.querySelector('.ProseMirror').querySelector('div');
-  const title = document.querySelector('#title');
   display.innerHTML = "";
 
   for (const item of allMemo){
@@ -44,7 +55,7 @@ function render(){
 
     contentDiv.classList.add('contentDiv')
     saveTitle.textContent = item.title;
-    saveContent.innerHTML = item.content;
+    saveContent.innerHTML = item.content;   // 마크다운 요소가 하나도 적용이 안되는데?
     saveDate.textContent = `${year}년 ${month}월 ${date}일`;
     deleteMemoBtn.textContent = "삭제";
     deleteMemoBtn.classList.add('btn');
@@ -58,8 +69,7 @@ function render(){
     contentDiv.appendChild(saveContent);
     wrapDiv.appendChild(deleteMemoBtn);
   }
-  editor.innerHTML = "";
-  title.value = "";
+  reset();
 }
 
 function remove(){
@@ -71,16 +81,36 @@ function remove(){
   render();
 }
 
-const clear = document.getElementById('clear');
-clear.addEventListener('click', () => {
-  alert('제목과 본문을 삭제합니다.')
+function resetConfirm(){
+  if(confirm('초기화 하시겠습니까?')){
+    reset();
+  }
+}
 
-  const editor = document.querySelector('.ProseMirror').querySelector('div');
+// 글 수정
+
+// 다크 모드
+function darkMode(){  // 상태 유지를 시켜야핳까?
+  let body = document.body;
+  body.classList.toggle('darkMode');
+  const editor = document.querySelector('.ProseMirror');
+  // const viewer = document.querySelector('.toastui-editor-contents').childNodes 뷰어 색은 왜 안바뀜
   const title = document.querySelector('#title');
+  const toolBar = document.querySelector('.toastui-editor-defaultUI-toolbar');
 
-  editor.innerHTML = ""
-  title.value = ""
-})
+  if (body.classList.contains('darkMode')){
+    editor.style.color = '#fff';
+    title.style.background = '#999';
+    title.style.color = '#fff';
+    toolBar.style.background = '#999';
+    // toolBar border, toggle btn, viewer 색상 다 이렇게 바꾸는게 맞나;;
+  } else {
+    editor.style.color = 'black';
+    title.style.background = '#f3f3f3';
+    title.style.color = 'black';
+    toolBar.style.background = '#f7f9fc';
+  }
+}
 
 // 날짜
 const $year = document.querySelector('.year');

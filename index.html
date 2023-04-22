@@ -19,6 +19,14 @@
 <body>
   <main>
     <div class="flex">
+      <h1>MEMO</h1>
+
+      <label class="switch-button">
+        <input type="checkbox" onclick="darkMode()"/>
+          <span class="onoff-switch"></span>
+      </label>
+    </div>
+    <div class="flex">
       <section id="date">
         <time datetime="">
           <span class="year"></span>
@@ -34,13 +42,13 @@
     </div>
     
     <section id="memo">
-      <label for="title" class="label">제목</label>
-      <input type="text" name="" id="title" />
+      <label for="title" class="a11y-hidden">제목</label>
+      <input type="text" id="title" placeholder="제목을 입력해주세요." />
       <div id="editor"></div>
 
       <div class="right">
         <button class="btn" onclick="saveNote()">등록</button>
-        <button class="btn" id="clear">초기화</button>
+        <button class="btn" onclick="resetConfirm()">초기화</button>
       </div>
     </section>
 
