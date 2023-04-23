@@ -17,14 +17,16 @@ render(); // render 가 있어야 새로고침 시 저장 내용들이 불러와
 function saveNote() {
   const title = document.getElementById("title").value;
   const content = editor.getHTML();
-
-  if (title === "" && content === "") { // 에디터 안에 내용이 비어있으면 등록 X 기능 => 왜 안대지?
-    alert('제목과 내용을 입력해주세요');
-  } else {
-    allMemo.push({ title, content, len: allMemo.length });
+  let year = new Date().getFullYear();
+  let month = new Date().getMonth() + 1;
+  let date = new Date().getDate();
+  // if (!title.value && !content.value) {
+  //   alert('제목과 내용을 입력해주세요');
+  // } else {// 이젠 여기가 실행 안댐
+    allMemo.push({ title, content, len: allMemo.length, year, month, date });
     localStorage.setItem("allMemo", JSON.stringify(allMemo));
     render();
-  }
+  // }
 }
 
 function reset(){ // wysiwyg 에서는 왜 안될까
@@ -49,14 +51,10 @@ function render(){
     const saveDate = document.createElement("span");
     const deleteMemoBtn = document.createElement("button");
 
-    let year = new Date().getFullYear();
-    let month = new Date().getMonth() + 1;
-    let date = new Date().getDate();
-
     contentDiv.classList.add('contentDiv')
     saveTitle.textContent = item.title;
     saveContent.innerHTML = item.content;   // 마크다운 요소가 하나도 적용이 안되는데?
-    saveDate.textContent = `${year}년 ${month}월 ${date}일`;
+    saveDate.textContent = `${item.year}년 ${item.month}월 ${item.date}일`;
     deleteMemoBtn.textContent = "삭제";
     deleteMemoBtn.classList.add('btn');
     deleteMemoBtn.setAttribute("id", item.len);
@@ -87,23 +85,21 @@ function resetConfirm(){
   }
 }
 
-// 글 수정
-
 // 다크 모드
 function darkMode(){  // 상태 유지를 시켜야핳까?
   let body = document.body;
   body.classList.toggle('darkMode');
   const editor = document.querySelector('.ProseMirror');
-  // const viewer = document.querySelector('.toastui-editor-contents').childNodes 뷰어 색은 왜 안바뀜
   const title = document.querySelector('#title');
-  const toolBar = document.querySelector('.toastui-editor-defaultUI-toolbar');
+  const popupBody = document.querySelector('.toastui-editor-popup-body');
+  const editorContents = document.querySelector('.toastui-editor-contents p');  // 왜 선택 안댐
 
   if (body.classList.contains('darkMode')){
     editor.style.color = '#fff';
-    title.style.background = '#999';
+    title.style.background = 'rgb(65, 65, 65)';
     title.style.color = '#fff';
-    toolBar.style.background = '#999';
-    // toolBar border, toggle btn, viewer 색상 다 이렇게 바꾸는게 맞나;;
+    popupBody.style.color = 'black';
+    editorContents.style.color = '#fff';
   } else {
     editor.style.color = 'black';
     title.style.background = '#f3f3f3';

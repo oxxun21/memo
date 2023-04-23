@@ -44,14 +44,6 @@ h1 {
   font-size: 25px;
 }
 
-#weather {
-
-}
-
-#memo {
-
-}
-
 #memo input {
   width: 100%;
   border: none;
@@ -78,7 +70,6 @@ h1 {
   font-family: 'SpoqaHanSansNeo-Regular';
   width: 120px;
   height: 50px;
-  border: none;
   border-radius: 10px;
   background: lightcoral;
   font-size: 20px;
@@ -137,11 +128,9 @@ h1 {
 }
 
 .darkMode {
-  background-color: rgb(65, 65, 65);
+  background-color: #1C1C1E;
   color: white;
 }
-
-/* 색상 조합 변경 */
 
 /* 다크 모드 버튼 */
 .switch-button {
