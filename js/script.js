@@ -20,16 +20,17 @@ function saveNote() {
   let year = new Date().getFullYear();
   let month = new Date().getMonth() + 1;
   let date = new Date().getDate();
-  // if (!title.value && !content.value) {
-  //   alert('제목과 내용을 입력해주세요');
-  // } else {// 이젠 여기가 실행 안댐
+  
+  if (!title || content === '<p><br></p>') {
+    alert('제목과 내용을 입력해주세요');
+  } else {
     allMemo.push({ title, content, len: allMemo.length, year, month, date });
     localStorage.setItem("allMemo", JSON.stringify(allMemo));
     render();
-  // }
+  }
 }
 
-function reset(){ // wysiwyg 에서는 왜 안될까
+function reset(){
   const title = document.querySelector('#title');
   const editor = document.querySelector('.ProseMirror');
 
@@ -53,7 +54,7 @@ function render(){
 
     contentDiv.classList.add('contentDiv')
     saveTitle.textContent = item.title;
-    saveContent.innerHTML = item.content;   // 마크다운 요소가 하나도 적용이 안되는데?
+    saveContent.innerHTML = item.content;
     saveDate.textContent = `${item.year}년 ${item.month}월 ${item.date}일`;
     deleteMemoBtn.textContent = "삭제";
     deleteMemoBtn.classList.add('btn');
@@ -86,25 +87,22 @@ function resetConfirm(){
 }
 
 // 다크 모드
-function darkMode(){  // 상태 유지를 시켜야핳까?
+function darkMode(){
   let body = document.body;
   body.classList.toggle('darkMode');
   const editor = document.querySelector('.ProseMirror');
   const title = document.querySelector('#title');
   const popupBody = document.querySelector('.toastui-editor-popup-body');
-  const editorContents = document.querySelector('.toastui-editor-contents p');  // 왜 선택 안댐
 
   if (body.classList.contains('darkMode')){
     editor.style.color = '#fff';
     title.style.background = 'rgb(65, 65, 65)';
     title.style.color = '#fff';
     popupBody.style.color = 'black';
-    editorContents.style.color = '#fff';
   } else {
     editor.style.color = 'black';
     title.style.background = '#f3f3f3';
     title.style.color = 'black';
-    toolBar.style.background = '#f7f9fc';
   }
 }
 
